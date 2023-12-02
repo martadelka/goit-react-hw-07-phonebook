@@ -1,9 +1,9 @@
 import React from 'react';
-import ContactForm from 'components/ContactForm';
-import ContactList from 'components/ContactList';
-import Filter from 'components/Filter';
+import ContactForm from '../ContactForm';
+import ContactList from '../ContactList';
+import Filter from '../Filter';
 
-function App() {
+export default function App() {
   return (
     <>
       <ContactForm />
@@ -12,5 +12,3 @@ function App() {
     </>
   );
 }
-
-export default App;

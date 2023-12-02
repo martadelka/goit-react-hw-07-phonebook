@@ -1,5 +1,24 @@
 import styled from '@emotion/styled';
-import { ErrorMessage } from 'formik';
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%
+`;
+
+export const ContactInput = styled.input`
+  padding: 0.5rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+
+  &:hover {
+    outline: 1px solid #b5c6e7
+  }
+`;
 
 export const ContactFormWrapper = styled.div`
   width: 30%;
@@ -17,13 +36,8 @@ export const Label = styled.label`
   color: #000;
 `;
 
-export const ErrorText = styled(ErrorMessage)`
-  color: red;
-  margin-top: 0.3125rem;
-`;
-
 export const Button = styled.button`
-    width: 100%;
+    width: 96%;
     background-color: #f3f6f9;
     border: none;
     border-radius: 10px;
@@ -34,7 +48,6 @@ export const Button = styled.button`
     margin-top: 0.625rem;
     margin-bottom: 0.5rem;
     text-align: center;
-    transition: all 300ms;
   transition: all 0.2s ease-in-out;
 
   &:hover {
@@ -43,37 +56,37 @@ export const Button = styled.button`
   }
 `;
 
-export const FormWrapper = styled.div`
-  max-width: 18.75rem;
-  display: flex;
-  flex-direction: column;
-`;
+// export const FormWrapper = styled.div`
+//   max-width: 18.75rem;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
-export const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.625rem;
-  label {
-    margin-bottom: 0.3125rem;
-    font-size: 1rem;
-  }
-  input {
-    padding: 0.5rem;
-    border: 0.0625rem solid #ccc;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+// export const FormGroup = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   margin-bottom: 0.625rem;
+//   label {
+//     margin-bottom: 0.3125rem;
+//     font-size: 1rem;
+//   }
+//   input {
+//     padding: 0.5rem;
+//     border: 0.0625rem solid #ccc;
+//     border-radius: 0.25rem;
+//     font-size: 1rem;
+//     margin-bottom: 0.5rem;
 
-    &:focus {
-      outline: 1px solid #b5c6e7
-    }
-  }
-  .error {
-    color: red;
-    font-size: 0.875rem;
-    margin-top: 0.3125rem;
-  }
-`;
+//     &:focus {
+//       outline: 1px solid #b5c6e7
+//     }
+//   }
+//   .error {
+//     color: red;
+//     font-size: 0.875rem;
+//     margin-top: 0.3125rem;
+//   }
+// `;
 
 
 

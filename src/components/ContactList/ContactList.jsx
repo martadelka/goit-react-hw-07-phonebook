@@ -1,34 +1,47 @@
 import React from 'react';
-import { ContactListWrapper } from './ContactListStyles';
-import { useSelector } from 'react-redux';
-import { getFilter } from 'redux/selectors';
-import ContactItem from 'components/ContactListItem';
-import Notiflix from 'notiflix';
-
-import { useGetContactsQuery } from 'redux/contactsApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeContact } from '../../redux/contacts/contacts-operations.js';
+import { getFilteredContacts } from '../../redux/contacts/contacts-selectors.js';
+import { AiFillDelete } from 'react-icons/ai';
+import { RiContactsLine } from 'react-icons/ri';
+import {
+  ContactListItem,
+  ContactIcon,
+  ContactListWrapper,
+  ContactListName,
+  ContactListPhone,
+  ContactDetails,
+  DeleteButton,
+} from './ContactListStyles.jsx';
 
 function ContactList() {
-  const { data: contacts } = useGetContactsQuery();
-  const filter = useSelector(getFilter);
+  const visibleContacts = useSelector(getFilteredContacts);
+  const dispatch = useDispatch();
 
-  if (!contacts) {
-    return null;
-  }
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const contactsList = visibleContacts.map(({ id, name, phone }) => (
+    <ContactListItem key={id}>
+        <ContactIcon>
+        <RiContactsLine />
+        </ContactIcon>
+        <ContactDetails>
+        <ContactListName>
+          {name}
+        </ContactListName>
+        <ContactListPhone>
+          {phone}
+        </ContactListPhone>
+        </ContactDetails>
+        <DeleteButton
+          id={id}
+          type="button"
+          onClick={() => dispatch(removeContact(id))}
+        >
+          <AiFillDelete />
+        </DeleteButton>
+    </ContactListItem>
+  ));
 
-  if (!filteredContacts?.length) {
-    Notiflix.Notify.info('No contacts found.');
-  }
-
-  return (
-    <ContactListWrapper>
-      {filteredContacts.map(({ id, name, phone }) => (
-        <ContactItem key={id} id={id} name={name} phone={phone} />
-      ))}
-    </ContactListWrapper>
-  );
+  return <ContactListWrapper>{contactsList}</ContactListWrapper>;
 }
 
 export default ContactList;
