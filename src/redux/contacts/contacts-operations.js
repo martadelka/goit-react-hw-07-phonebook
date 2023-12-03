@@ -14,14 +14,14 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-const isDublicate = ({ name }, contacts) => {
-  const normalizedName = name.toLowerCase();
+// const isDublicate = ({ name }, contacts) => {
+//   const normalizedName = name.toLowerCase();
 
-  const result = contacts.find(item => {
-    return normalizedName === item.name.toLowerCase();
-  });
-  return Boolean(result);
-};
+//   const result = contacts.find(item => {
+//     return normalizedName === item.name.toLowerCase();
+//   });
+//   return Boolean(result);
+// };
 
 export const addContact = createAsyncThunk(
   'contacts/add',
@@ -33,15 +33,15 @@ export const addContact = createAsyncThunk(
       return rejectWithValue(error);
     }
   },
-  {
-    condition: (data, { getState }) => {
-      const { contacts } = getState();
-      if (isDublicate(data, contacts.items)) {
-        alert(`${data.name} is already exist!`);
-        return false;
-      }
-    },
-  }
+  // {
+    // condition: (data, { getState }) => {
+    //   const { contacts } = getState();
+    //   if (isDublicate(data, contacts.items)) {
+    //     alert(`${data.name} is already exist!`);
+    //     return false;
+    //   }
+    // },
+  // }
 );
 
 export const removeContact = createAsyncThunk(

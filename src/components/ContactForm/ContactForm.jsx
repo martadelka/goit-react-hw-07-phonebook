@@ -6,6 +6,7 @@ import {
   addContact,
   fetchContacts,
 } from '../../redux/contacts/contacts-operations';
+// import { getContacts } from '../../redux/contacts/contacts-selectors'
 import {
   ContactFormWrapper,
   Form,
@@ -14,8 +15,10 @@ import {
   Label,
   ContactInput,
 } from './ContactFormStyles';
+import { useSelector } from 'react-redux';
 
 export default function ContactForm({ onSubmit }) {
+  const contacts = useSelector(state => state.contacts.items);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
@@ -34,11 +37,29 @@ export default function ContactForm({ onSubmit }) {
   };
   console.log(onSubmit);
 
+  const isContactDuplicate = (contacts, name, phone) => {
+  if (!contacts || !Array.isArray(contacts)) {
+    return false;
+  }
+  return contacts.some(
+    contact => contact.name === name || contact.phone === phone
+  );
+};
+
+
   const handleSubmit = e => {
-    e.preventDefault();
-    resetState();
-    dispatch(addContact({ name, phone }));
-  };
+  e.preventDefault();
+  resetState();
+
+  const isDuplicateContact = isContactDuplicate(contacts, name, phone);
+
+  if (isDuplicateContact) {
+    alert(`Contact with this name or phone number already exists!`);
+    return;
+  }
+
+  dispatch(addContact({ name, phone }));
+};
 
   return (
     <ContactFormWrapper>
@@ -130,6 +151,14 @@ export default function ContactForm({ onSubmit }) {
 //       contact => contact.name === name || contact.phone === phone
 //     );
 //   };
+
+// condition: (data, { getState }) => {
+//   const { contacts } = getState();
+//   if (isDublicate(data, contacts.items)) {
+//     alert(`${data.name} is already exist!`);
+//     return false;
+//   }
+// },
 
 //   const handleSubmit = async (values, actions) => {
 //     const { name, phone } = values;

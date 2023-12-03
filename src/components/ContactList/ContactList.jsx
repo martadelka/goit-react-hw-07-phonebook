@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeContact } from '../../redux/contacts/contacts-operations.js';
-import { getFilteredContacts } from '../../redux/contacts/contacts-selectors.js';
+import { getVisibleContacts } from '../../redux/contacts/contacts-selectors.js';
 import { AiFillDelete } from 'react-icons/ai';
 import { RiContactsLine } from 'react-icons/ri';
 import {
@@ -14,34 +14,38 @@ import {
   DeleteButton,
 } from './ContactListStyles.jsx';
 
+const ContactItem = ({ id, name, phone, onDelete }) => (
+  <ContactListItem key={id}>
+    <ContactIcon>
+      <RiContactsLine />
+    </ContactIcon>
+    <ContactDetails>
+      <ContactListName>{name}</ContactListName>
+      <ContactListPhone>{phone}</ContactListPhone>
+    </ContactDetails>
+    <DeleteButton type="button" onClick={() => onDelete(id)}>
+      <AiFillDelete />
+    </DeleteButton>
+  </ContactListItem>
+);
+
 function ContactList() {
-  const visibleContacts = useSelector(getFilteredContacts);
+  const visibleContacts = useSelector(getVisibleContacts);
   const dispatch = useDispatch();
 
-  const contactsList = visibleContacts.map(({ id, name, phone }) => (
-    <ContactListItem key={id}>
-        <ContactIcon>
-        <RiContactsLine />
-        </ContactIcon>
-        <ContactDetails>
-        <ContactListName>
-          {name}
-        </ContactListName>
-        <ContactListPhone>
-          {phone}
-        </ContactListPhone>
-        </ContactDetails>
-        <DeleteButton
+  return (
+    <ContactListWrapper>
+      {visibleContacts.map(({ id, name, phone }) => (
+        <ContactItem
+          key={id}
           id={id}
-          type="button"
-          onClick={() => dispatch(removeContact(id))}
-        >
-          <AiFillDelete />
-        </DeleteButton>
-    </ContactListItem>
-  ));
-
-  return <ContactListWrapper>{contactsList}</ContactListWrapper>;
+          name={name}
+          phone={phone}
+          onDelete={(id) => dispatch(removeContact(id))}
+        />
+      ))}
+    </ContactListWrapper>
+  );
 }
 
 export default ContactList;

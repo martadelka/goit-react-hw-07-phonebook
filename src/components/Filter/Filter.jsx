@@ -6,9 +6,10 @@ import {
   FilterInput,
   FilterWrapper,
 } from './FilterStyles';
+import { selectFilter } from '../../redux/filter/filter-selectors'
 
 function Filter() {
-  const filter = useSelector(state => state.contacts.filter);
+  const filter = useSelector(selectFilter);
 
   const dispatch = useDispatch();
   const handleFilterContacts = e => {
